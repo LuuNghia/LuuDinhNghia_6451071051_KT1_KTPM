@@ -312,4 +312,16 @@ public class LoginTest extends BaseTest {
             .as("Không thể đăng nhập bằng chuỗi SQLi logic luôn đúng")
             .isFalse();
     }
+
+    @Test
+    @DisplayName("TC17: Comment SQL trong Username: huongnt'--")
+    public void TC17_SQLi_Comment() {
+        loginPage.enterUsername("huongnt'--")
+                 .enterPassword("batky")
+                 .clickLogin();
+
+        assertThat(homePage.isLoggedInSuccessfully())
+            .as("Đăng nhập bằng comment SQL phải bị từ chối")
+            .isFalse();
+    }
 }
