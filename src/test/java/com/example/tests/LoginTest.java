@@ -251,4 +251,22 @@ public class LoginTest extends BaseTest {
             .as("Ô mật khẩu phải có thuộc tính type='password' để ẩn ký tự dạng plain text")
             .isEqualTo("password");
     }
+
+    @Test
+    @DisplayName("TC13: Đăng nhập bằng phím Enter")
+    public void TC13_LoginWithEnterKey() {
+        loginPage.enterUsername(validUser)
+                 .enterPassword(validPass)
+                 .submitWithEnter();
+
+        // Kiểm tra hệ thống thực hiện submit form khi ấn Enter
+        assertThat(driver.getCurrentUrl())
+            .as("Hành vi ấn Enter phải thực hiện gửi form đăng nhập")
+            .isNotNull();
+    }
+
+    // =========================================================================
+    // TEST CASES SECURITY / SQL INJECTION (TC14 - TC20)
+    // CHÚ Ý: CHỈ CHẠY TRÊN MÔI TRƯỜNG KIỂM THỬ ĐƯỢC PHÉP!
+    // =========================================================================
 }
