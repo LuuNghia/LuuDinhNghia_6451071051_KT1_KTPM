@@ -172,4 +172,17 @@ public class LoginTest extends BaseTest {
     // =========================================================================
     // TEST CASES FORM INPUT & BOUNDARY (TC07 - TC13)
     // =========================================================================
+
+    @Test
+    @DisplayName("TC07: Bỏ trống cả Username và Password")
+    public void TC07_EmptyBothFields() {
+        loginPage.enterUsername("")
+                 .enterPassword("")
+                 .clickLogin();
+
+        String errorMsg = loginPage.getErrorMessage();
+        assertThat(errorMsg)
+            .as("Hệ thống phải báo lỗi yêu cầu nhập thông tin khi để trống cả 2 ô")
+            .isNotEmpty();
+    }
 }
