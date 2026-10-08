@@ -139,4 +139,37 @@ public class LoginTest extends BaseTest {
             customDriver2.quit();
         }
     }
+
+    @Test
+    @DisplayName("TC06: Đăng nhập + KHÔNG tích checkbox 'Giữ tôi luôn đăng nhập', đóng/mở lại trình duyệt")
+    public void TC06_RememberMe_Unchecked_ReopenBrowser() throws Exception {
+        File tempProfileDir = Files.createTempDirectory("utc_chrome_profile_tc06").toFile();
+        tempProfileDir.deleteOnExit();
+
+        WebDriver customDriver1 = DriverFactory.createDriverWithProfile(tempProfileDir);
+        try {
+            customDriver1.get(baseUrl);
+            LoginPage lp1 = new LoginPage(customDriver1);
+            lp1.enterUsername(validUser)
+               .enterPassword(validPass)
+               .setRememberMe(false)
+               .clickLogin();
+        } finally {
+            customDriver1.quit();
+        }
+
+        // Mở lại trình duyệt với cùng profile
+        WebDriver customDriver2 = DriverFactory.createDriverWithProfile(tempProfileDir);
+        try {
+            customDriver2.get(baseUrl);
+            HomePage hp2 = new HomePage(customDriver2);
+            System.out.println("TC06 - URL sau khi mở lại: " + customDriver2.getCurrentUrl());
+        } finally {
+            customDriver2.quit();
+        }
+    }
+
+    // =========================================================================
+    // TEST CASES FORM INPUT & BOUNDARY (TC07 - TC13)
+    // =========================================================================
 }
