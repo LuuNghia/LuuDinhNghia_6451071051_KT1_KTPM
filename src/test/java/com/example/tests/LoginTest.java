@@ -340,4 +340,22 @@ public class LoginTest extends BaseTest {
             .doesNotContain("MySQL")
             .doesNotContain("SQLServerException");
     }
+
+    @Test
+    @DisplayName("TC19: Time-based SQL Injection: huongnt'; WAITFOR DELAY '0:0:5'--")
+    public void TC19_SQLi_TimeBased() {
+        long thresholdSec = ConfigReader.getIntProperty("sqliTimeThresholdSeconds", 4);
+        long startNano = System.nanoTime();
+
+        loginPage.enterUsername("huongnt'; WAITFOR DELAY '0:0:5'--")
+                 .enterPassword("123456")
+                 .clickLogin();
+
+        long elapsedSec = (System.nanoTime() - startNano) / 1_000_000_000L;
+        System.out.println("TC19 - Thời gian phản hồi: " + elapsedSec + " giây (Ngưỡng cho phép: " + thresholdSec + "s)");
+
+        assertThat(elapsedSec)
+            .as("Thời gian phản hồi không được trễ theo lệnh WAITFOR DELAY (~5s)")
+            .isLessThan(thresholdSec + 2); // Cho phep sai so mang nho
+    }
 }
