@@ -242,4 +242,13 @@ public class LoginTest extends BaseTest {
             .as("Hệ thống phải phản hồi rõ ràng (cho phép đăng nhập thành công hoặc báo sai tài khoản)")
             .isTrue();
     }
+
+    @Test
+    @DisplayName("TC12: Mật khẩu được che (type='password')")
+    public void TC12_PasswordMasked() {
+        String inputType = loginPage.getPasswordInputType();
+        assertThat(inputType)
+            .as("Ô mật khẩu phải có thuộc tính type='password' để ẩn ký tự dạng plain text")
+            .isEqualTo("password");
+    }
 }
