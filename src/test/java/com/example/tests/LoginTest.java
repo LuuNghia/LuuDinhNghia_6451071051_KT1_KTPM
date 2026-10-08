@@ -198,4 +198,17 @@ public class LoginTest extends BaseTest {
             .as("Hệ thống phải báo chưa nhập tên đăng nhập hoặc xử lý trim khoảng trắng")
             .isNotEmpty();
     }
+
+    @Test
+    @DisplayName("TC09: Password toàn khoảng trắng")
+    public void TC09_PasswordAllSpaces() {
+        loginPage.enterUsername(validUser)
+                 .enterPassword("   ")
+                 .clickLogin();
+
+        String errorMsg = loginPage.getErrorMessage();
+        assertThat(errorMsg)
+            .as("Hệ thống phải báo chưa nhập mật khẩu")
+            .isNotEmpty();
+    }
 }
