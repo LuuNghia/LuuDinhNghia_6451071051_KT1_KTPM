@@ -34,26 +34,6 @@ public class LoginTest extends BaseTest {
     // TEST CASES CO BAN (TC01 - TC04)
     // =========================================================================
 
-/**
- * Suite Kiem thu Tu dong hoa chuc nang Dang nhap (20 Test Cases)
- * Website: https://vanphongdientu.utc.edu.vn/Login
- * 
- * LUU Y QUAN TRONG:
- * CAC TEST CASE SQL INJECTION (TC14 -> TC20) CHÍ KIỂM THỬ TRÊN MÔI TRƯỜNG ĐƯỢC CẤP PHÉP (STAGING/TEST).
- * KHÔNG CHẠY SQL INJECTION TRÊN MÔI TRƯỜNG PRODUCTION THẬT SỰ KHI CHƯA ĐƯỢC CHO PHÉP.
- */
-public class LoginTest extends BaseTest {
-
-    private final String validUser = ConfigReader.getProperty("validUsername", "huongnt");
-    private final String validPass = ConfigReader.getProperty("validPassword", "123456@utc");
-
-    private final String expectedNoUser = ConfigReader.getProperty("expectedErrNoUser", "Bạn chưa nhập tên đăng nhập");
-    private final String expectedNoPass = ConfigReader.getProperty("expectedErrNoPass", "Bạn chưa nhập mật khẩu");
-    private final String expectedInvalid = ConfigReader.getProperty("expectedErrInvalid", "Tài khoản không đúng");
-
-    // =========================================================================
-    // TEST CASES CO BAN (TC01 - TC04)
-    // =========================================================================
 
     @Test
     @DisplayName("TC01: Để trống Username, nhập Password")
