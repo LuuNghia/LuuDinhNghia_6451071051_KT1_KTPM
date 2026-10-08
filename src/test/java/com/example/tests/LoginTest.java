@@ -285,4 +285,19 @@ public class LoginTest extends BaseTest {
             .as("Hệ thống báo sai tài khoản thông thường, không bị lọt thông tin")
             .containsAnyOf(expectedInvalid, "không đúng", "thất bại", "sai");
     }
+
+    @Test
+    @DisplayName("TC15: Ký tự nháy đơn trong Username: huongnt'")
+    public void TC15_SQLi_SingleQuote() {
+        loginPage.enterUsername("huongnt'")
+                 .enterPassword("123456")
+                 .clickLogin();
+
+        String pageSource = loginPage.getPageSource();
+        assertThat(pageSource)
+            .as("Hệ thống không được bị lỗi 500 Internal Server Error hoặc hiển thị truy vấn SQL lỗi")
+            .doesNotContain("Internal Server Error")
+            .doesNotContain("SQL syntax")
+            .doesNotContain("Unclosed quotation mark");
+    }
 }
