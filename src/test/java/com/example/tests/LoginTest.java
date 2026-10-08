@@ -269,4 +269,20 @@ public class LoginTest extends BaseTest {
     // TEST CASES SECURITY / SQL INJECTION (TC14 - TC20)
     // CHÚ Ý: CHỈ CHẠY TRÊN MÔI TRƯỜNG KIỂM THỬ ĐƯỢC PHÉP!
     // =========================================================================
+
+    @Test
+    @DisplayName("TC14: SQL Injection cơ bản: ' or 1=1 --")
+    public void TC14_SQLi_Basic() {
+        loginPage.enterUsername("' or 1=1 --")
+                 .enterPassword("batky")
+                 .clickLogin();
+
+        String errorMsg = loginPage.getErrorMessage();
+        assertThat(homePage.isLoggedInSuccessfully())
+            .as("SQL Injection không thể giúp đăng nhập thành công")
+            .isFalse();
+        assertThat(errorMsg)
+            .as("Hệ thống báo sai tài khoản thông thường, không bị lọt thông tin")
+            .containsAnyOf(expectedInvalid, "không đúng", "thất bại", "sai");
+    }
 }
