@@ -211,4 +211,17 @@ public class LoginTest extends BaseTest {
             .as("Hệ thống phải báo chưa nhập mật khẩu")
             .isNotEmpty();
     }
+
+    @Test
+    @DisplayName("TC10: Cả Username và Password đều sai")
+    public void TC10_BothInvalid() {
+        loginPage.enterUsername("sai_user")
+                 .enterPassword("sai_pass")
+                 .clickLogin();
+
+        String errorMsg = loginPage.getErrorMessage();
+        assertThat(errorMsg)
+            .as("Hệ thống phải thông báo tài khoản không đúng")
+            .containsAnyOf(expectedInvalid, "không đúng", "thất bại", "sai");
+    }
 }
