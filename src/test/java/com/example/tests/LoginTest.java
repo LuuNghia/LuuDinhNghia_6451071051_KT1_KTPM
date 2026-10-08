@@ -67,4 +67,17 @@ public class LoginTest extends BaseTest {
             .as("Hệ thống phải báo lỗi chưa nhập tên đăng nhập hoặc yêu cầu nhập thông tin")
             .isNotEmpty();
     }
+
+    @Test
+    @DisplayName("TC02: Để trống Password, nhập Username")
+    public void TC02_EmptyPassword() {
+        loginPage.enterUsername(validUser)
+                 .enterPassword("")
+                 .clickLogin();
+
+        String errorMsg = loginPage.getErrorMessage();
+        assertThat(errorMsg)
+            .as("Hệ thống phải báo lỗi chưa nhập mật khẩu")
+            .isNotEmpty();
+    }
 }
