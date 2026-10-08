@@ -300,4 +300,16 @@ public class LoginTest extends BaseTest {
             .doesNotContain("SQL syntax")
             .doesNotContain("Unclosed quotation mark");
     }
+
+    @Test
+    @DisplayName("TC16: Logic luôn đúng ở cả 2 trường: ' OR '1'='1")
+    public void TC16_SQLi_AlwaysTrueBothFields() {
+        loginPage.enterUsername("' OR '1'='1")
+                 .enterPassword("' OR '1'='1")
+                 .clickLogin();
+
+        assertThat(homePage.isLoggedInSuccessfully())
+            .as("Không thể đăng nhập bằng chuỗi SQLi logic luôn đúng")
+            .isFalse();
+    }
 }
