@@ -324,4 +324,20 @@ public class LoginTest extends BaseTest {
             .as("Đăng nhập bằng comment SQL phải bị từ chối")
             .isFalse();
     }
+
+    @Test
+    @DisplayName("TC18: UNION SELECT SQL Injection: ' UNION SELECT NULL--")
+    public void TC18_SQLi_UnionSelect() {
+        loginPage.enterUsername("' UNION SELECT NULL--")
+                 .enterPassword("test")
+                 .clickLogin();
+
+        String pageSource = loginPage.getPageSource();
+        assertThat(pageSource)
+            .as("Hệ thống không được lộ thông tin Database, Schema, Table hoặc Stack Trace")
+            .doesNotContain("System.Data.SqlClient")
+            .doesNotContain("org.hibernate")
+            .doesNotContain("MySQL")
+            .doesNotContain("SQLServerException");
+    }
 }
