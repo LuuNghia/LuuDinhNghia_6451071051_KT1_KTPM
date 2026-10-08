@@ -224,4 +224,22 @@ public class LoginTest extends BaseTest {
             .as("Hệ thống phải thông báo tài khoản không đúng")
             .containsAnyOf(expectedInvalid, "không đúng", "thất bại", "sai");
     }
+
+    @Test
+    @DisplayName("TC11: Username viết hoa (HUONGNT)")
+    public void TC11_UsernameUppercase() {
+        loginPage.enterUsername("HUONGNT")
+                 .enterPassword(validPass)
+                 .clickLogin();
+
+        // Ghi nhận kết quả thực tế và kiểm tra hành vi hệ thống
+        String errorMsg = loginPage.getErrorMessage();
+        boolean isHome = homePage.isLoggedInSuccessfully();
+        System.out.println("TC11 - Username viết hoa: LoggedIn=" + isHome + ", Error=" + errorMsg);
+        
+        // Assert tuỳ thuộc vào quy định hệ thống (cho phép case-insensitive hoặc báo sai)
+        assertThat(isHome || !errorMsg.isEmpty())
+            .as("Hệ thống phải phản hồi rõ ràng (cho phép đăng nhập thành công hoặc báo sai tài khoản)")
+            .isTrue();
+    }
 }
