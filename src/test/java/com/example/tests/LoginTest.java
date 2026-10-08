@@ -185,4 +185,17 @@ public class LoginTest extends BaseTest {
             .as("Hệ thống phải báo lỗi yêu cầu nhập thông tin khi để trống cả 2 ô")
             .isNotEmpty();
     }
+
+    @Test
+    @DisplayName("TC08: Username toàn khoảng trắng")
+    public void TC08_UsernameAllSpaces() {
+        loginPage.enterUsername("   ")
+                 .enterPassword(validPass)
+                 .clickLogin();
+
+        String errorMsg = loginPage.getErrorMessage();
+        assertThat(errorMsg)
+            .as("Hệ thống phải báo chưa nhập tên đăng nhập hoặc xử lý trim khoảng trắng")
+            .isNotEmpty();
+    }
 }
