@@ -80,4 +80,17 @@ public class LoginTest extends BaseTest {
             .as("Hệ thống phải báo lỗi chưa nhập mật khẩu")
             .isNotEmpty();
     }
+
+    @Test
+    @DisplayName("TC03: Đúng Username, sai Password")
+    public void TC03_ValidUser_InvalidPass() {
+        loginPage.enterUsername(validUser)
+                 .enterPassword("utc@235")
+                 .clickLogin();
+
+        String errorMsg = loginPage.getErrorMessage();
+        assertThat(errorMsg)
+            .as("Hệ thống phải từ chối đăng nhập khi sai password")
+            .containsAnyOf(expectedInvalid, "không đúng", "thất bại", "sai");
+    }
 }
