@@ -358,4 +358,16 @@ public class LoginTest extends BaseTest {
             .as("Thời gian phản hồi không được trễ theo lệnh WAITFOR DELAY (~5s)")
             .isLessThan(thresholdSec + 2); // Cho phep sai so mang nho
     }
+
+    @Test
+    @DisplayName("TC20: SQL Injection ở ô Password: ' OR 'a'='a")
+    public void TC20_SQLi_InPassword() {
+        loginPage.enterUsername(validUser)
+                 .enterPassword("' OR 'a'='a")
+                 .clickLogin();
+
+        assertThat(homePage.isLoggedInSuccessfully())
+            .as("SQL Injection ở ô password phải bị từ chối")
+            .isFalse();
+    }
 }
