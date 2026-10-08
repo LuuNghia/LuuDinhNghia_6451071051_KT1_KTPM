@@ -93,4 +93,21 @@ public class LoginTest extends BaseTest {
             .as("Hệ thống phải từ chối đăng nhập khi sai password")
             .containsAnyOf(expectedInvalid, "không đúng", "thất bại", "sai");
     }
+
+    @Test
+    @DisplayName("TC04: Sai Username, đúng Password")
+    public void TC04_InvalidUser_ValidPass() {
+        loginPage.enterUsername("huongthunguyen")
+                 .enterPassword(validPass)
+                 .clickLogin();
+
+        String errorMsg = loginPage.getErrorMessage();
+        assertThat(errorMsg)
+            .as("Hệ thống phải từ chối đăng nhập khi sai username")
+            .containsAnyOf(expectedInvalid, "không đúng", "thất bại", "sai");
+    }
+
+    // =========================================================================
+    // TEST CASES SESSION & BROWSER REOPEN (TC05 - TC06)
+    // =========================================================================
 }
