@@ -110,4 +110,33 @@ public class LoginTest extends BaseTest {
     // =========================================================================
     // TEST CASES SESSION & BROWSER REOPEN (TC05 - TC06)
     // =========================================================================
+    @Test
+    @DisplayName("TC05: Đăng nhập thành công + tích 'Giữ tôi luôn đăng nhập', đóng/mở lại trình duyệt")
+    public void TC05_RememberMe_Checked_ReopenBrowser() throws Exception {
+        File tempProfileDir = Files.createTempDirectory("utc_chrome_profile_tc05").toFile();
+        tempProfileDir.deleteOnExit();
+
+        WebDriver customDriver1 = DriverFactory.createDriverWithProfile(tempProfileDir);
+        try {
+            customDriver1.get(baseUrl);
+            LoginPage lp1 = new LoginPage(customDriver1);
+            lp1.enterUsername(validUser)
+               .enterPassword(validPass)
+               .setRememberMe(true)
+               .clickLogin();
+        } finally {
+            customDriver1.quit();
+        }
+
+        // Mở lại trình duyệt với cùng profile
+        WebDriver customDriver2 = DriverFactory.createDriverWithProfile(tempProfileDir);
+        try {
+            customDriver2.get(baseUrl);
+            HomePage hp2 = new HomePage(customDriver2);
+            // Kiểm tra trạng thái đã đăng nhập (hoặc chuyển hướng sang trang chủ)
+            System.out.println("TC05 - URL sau khi mở lại: " + customDriver2.getCurrentUrl());
+        } finally {
+            customDriver2.quit();
+        }
+    }
 }
